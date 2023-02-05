@@ -152,6 +152,65 @@ func (i *initCasbin) InitializeData(ctx context.Context) (context.Context, error
 		{Ptype: "p", V0: "888", V1: "/authorityBtn/getAuthorityBtn", V2: "POST"},
 		{Ptype: "p", V0: "888", V1: "/authorityBtn/canRemoveAuthorityBtn", V2: "POST"},
 
+		// 平台api 开始
+		{Ptype: "p", V0: "888", V1: "/article/findArticle", V2: "GET"},
+		{Ptype: "p", V0: "888", V1: "/article/updateArticle", V2: "PUT"},
+		{Ptype: "p", V0: "888", V1: "/article/createArticle", V2: "POST"},
+		{Ptype: "p", V0: "888", V1: "/article/getArticleList", V2: "GET"},
+		{Ptype: "p", V0: "888", V1: "/article/deleteArticle", V2: "DELETE"},
+		{Ptype: "p", V0: "888", V1: "/article/deleteArticleByIds", V2: "DELETE"},
+
+		{Ptype: "p", V0: "888", V1: "/activity/findActivity", V2: "GET"},
+		{Ptype: "p", V0: "888", V1: "/activity/updateActivity", V2: "PUT"},
+		{Ptype: "p", V0: "888", V1: "/activity/createActivity", V2: "POST"},
+		{Ptype: "p", V0: "888", V1: "/activity/getActivityList", V2: "GET"},
+		{Ptype: "p", V0: "888", V1: "/activity/deleteActivity", V2: "DELETE"},
+		{Ptype: "p", V0: "888", V1: "/activity/deleteActivityByIds", V2: "DELETE"},
+
+		{Ptype: "p", V0: "888", V1: "/activityRecord/findActivityRecord", V2: "GET"},
+		{Ptype: "p", V0: "888", V1: "/activityRecord/updateActivityRecord", V2: "PUT"},
+		{Ptype: "p", V0: "888", V1: "/activityRecord/createActivityRecord", V2: "POST"},
+		{Ptype: "p", V0: "888", V1: "/activityRecord/getActivityRecordList", V2: "GET"},
+		{Ptype: "p", V0: "888", V1: "/activityRecord/deleteActivityRecord", V2: "DELETE"},
+		{Ptype: "p", V0: "888", V1: "/activityRecord/deleteActivityRecordByIds", V2: "DELETE"},
+
+		{Ptype: "p", V0: "888", V1: "/comment/findComment", V2: "GET"},
+		{Ptype: "p", V0: "888", V1: "/comment/updateComment", V2: "PUT"},
+		{Ptype: "p", V0: "888", V1: "/comment/createComment", V2: "POST"},
+		{Ptype: "p", V0: "888", V1: "/comment/getCommentList", V2: "GET"},
+		{Ptype: "p", V0: "888", V1: "/comment/deleteComment", V2: "DELETE"},
+		{Ptype: "p", V0: "888", V1: "/comment/deleteCommentByIds", V2: "DELETE"},
+
+		{Ptype: "p", V0: "888", V1: "/introduce/findIntroduce", V2: "GET"},
+		{Ptype: "p", V0: "888", V1: "/introduce/updateIntroduce", V2: "PUT"},
+		{Ptype: "p", V0: "888", V1: "/introduce/createIntroduce", V2: "POST"},
+		{Ptype: "p", V0: "888", V1: "/introduce/getIntroduceList", V2: "GET"},
+		{Ptype: "p", V0: "888", V1: "/introduce/deleteIntroduce", V2: "DELETE"},
+		{Ptype: "p", V0: "888", V1: "/introduce/deleteIntroduceByIds", V2: "DELETE"},
+
+		{Ptype: "p", V0: "888", V1: "/message/findMessage", V2: "GET"},
+		{Ptype: "p", V0: "888", V1: "/message/updateMessage", V2: "PUT"},
+		{Ptype: "p", V0: "888", V1: "/message/createMessage", V2: "POST"},
+		{Ptype: "p", V0: "888", V1: "/message/getMessageList", V2: "GET"},
+		{Ptype: "p", V0: "888", V1: "/message/deleteMessage", V2: "DELETE"},
+		{Ptype: "p", V0: "888", V1: "/message/deleteMessageByIds", V2: "DELETE"},
+
+		{Ptype: "p", V0: "888", V1: "/moments/findMoments", V2: "GET"},
+		{Ptype: "p", V0: "888", V1: "/moments/updateMoments", V2: "PUT"},
+		{Ptype: "p", V0: "888", V1: "/moments/createMoments", V2: "POST"},
+		{Ptype: "p", V0: "888", V1: "/moments/getMomentsList", V2: "GET"},
+		{Ptype: "p", V0: "888", V1: "/moments/deleteMoments", V2: "DELETE"},
+		{Ptype: "p", V0: "888", V1: "/moments/deleteMomentsByIds", V2: "DELETE"},
+
+		{Ptype: "p", V0: "888", V1: "/organizationInformation/findOrganizationInformation", V2: "GET"},
+		{Ptype: "p", V0: "888", V1: "/organizationInformation/updateOrganizationInformation", V2: "PUT"},
+		{Ptype: "p", V0: "888", V1: "/organizationInformation/createOrganizationInformation", V2: "POST"},
+		{Ptype: "p", V0: "888", V1: "/organizationInformation/getOrganizationInformationList", V2: "GET"},
+		{Ptype: "p", V0: "888", V1: "/organizationInformation/deleteOrganizationInformation", V2: "DELETE"},
+		{Ptype: "p", V0: "888", V1: "/organizationInformation/deleteOrganizationInformationByIds", V2: "DELETE"},
+
+		// 平台api 结束
+
 		{Ptype: "p", V0: "8881", V1: "/base/login", V2: "POST"},
 		{Ptype: "p", V0: "8881", V1: "/user/admin_register", V2: "POST"},
 		{Ptype: "p", V0: "8881", V1: "/api/createApi", V2: "POST"},

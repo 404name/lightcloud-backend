@@ -2,9 +2,11 @@ package initialize
 
 import (
 	"context"
+
 	adapter "github.com/casbin/gorm-adapter/v3"
 	"github.com/flipped-aurora/gin-vue-admin/server/model/example"
 	sysModel "github.com/flipped-aurora/gin-vue-admin/server/model/system"
+	"github.com/flipped-aurora/gin-vue-admin/server/model/web"
 	"github.com/flipped-aurora/gin-vue-admin/server/service/system"
 	"gorm.io/gorm"
 )
@@ -90,6 +92,16 @@ func (e *ensureTables) TableCreated(ctx context.Context) bool {
 		example.ExaCustomer{},
 		example.ExaFileChunk{},
 		example.ExaFileUploadAndDownload{},
+
+		// web相关
+		web.Article{},
+		web.Activity{},
+		web.ActivityRecord{},
+		web.Comment{},
+		web.Introduce{},
+		web.Message{},
+		web.Moments{},
+		web.OrganizationInformation{},
 	}
 	yes := true
 	for _, t := range tables {

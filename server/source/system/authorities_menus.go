@@ -44,7 +44,7 @@ func (i *initMenuAuthority) InitializeData(ctx context.Context) (next context.Co
 		return next, errors.Wrap(errors.New(""), "创建 [菜单-权限] 关联失败, 未找到菜单表初始化数据")
 	}
 	next = ctx
-	// 888
+	// 888 系统角色全部目录
 	if err = db.Model(&authorities[0]).Association("SysBaseMenus").Replace(menus); err != nil {
 		return next, err
 	}

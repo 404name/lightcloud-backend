@@ -3,6 +3,7 @@ package system
 import (
 	"errors"
 	"fmt"
+
 	"github.com/flipped-aurora/gin-vue-admin/server/global"
 	"github.com/flipped-aurora/gin-vue-admin/server/model/common/request"
 	"github.com/flipped-aurora/gin-vue-admin/server/model/system"
@@ -90,6 +91,25 @@ func (userService *UserService) GetUserInfoList(info request.PageInfo) (list int
 		return
 	}
 	err = db.Limit(limit).Offset(offset).Preload("Authorities").Preload("Authority").Find(&userList).Error
+	return userList, total, err
+}
+
+//@author: [404name](https://github.com/404name)
+//@function: GetOrganizationList
+//@description: GetOrganizationList
+//@param: info request.PageInfo
+//@return: err error, list interface{}, total int64
+
+func (userService *UserService) GetOrganizationList(info request.PageInfo) (list interface{}, total int64, err error) {
+	limit := info.PageSize
+	offset := info.PageSize * (info.Page - 1)
+	db := global.GVA_DB.Model(&system.SysUser{})
+	var userList []system.SysUser
+	err = db.Count(&total).Error
+	if err != nil {
+		return
+	}
+	err = db.Limit(limit).Offset(offset).Where("authority_id = ?", 9528).Find(&userList).Error
 	return userList, total, err
 }
 

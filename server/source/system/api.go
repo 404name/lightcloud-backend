@@ -2,6 +2,7 @@ package system
 
 import (
 	"context"
+
 	sysModel "github.com/flipped-aurora/gin-vue-admin/server/model/system"
 	"github.com/flipped-aurora/gin-vue-admin/server/service/system"
 	"github.com/pkg/errors"
@@ -151,6 +152,64 @@ func (i *initApi) InitializeData(ctx context.Context) (context.Context, error) {
 		{ApiGroup: "按钮权限", Method: "POST", Path: "/authorityBtn/setAuthorityBtn", Description: "设置按钮权限"},
 		{ApiGroup: "按钮权限", Method: "POST", Path: "/authorityBtn/getAuthorityBtn", Description: "获取已有按钮权限"},
 		{ApiGroup: "按钮权限", Method: "POST", Path: "/authorityBtn/canRemoveAuthorityBtn", Description: "删除按钮"},
+
+		// 项目内容
+
+		{ApiGroup: "文章", Method: "POST", Path: "/article/createArticle", Description: "新增文章表"},
+		{ApiGroup: "文章", Method: "DELETE", Path: "/article/deleteArticle", Description: "删除文章表"},
+		{ApiGroup: "文章", Method: "DELETE", Path: "/article/deleteArticleByIds", Description: "批量删除文章表"},
+		{ApiGroup: "文章", Method: "PUT", Path: "/article/updateArticle", Description: "更新文章表"},
+		{ApiGroup: "文章", Method: "GET", Path: "/article/findArticle", Description: "根据ID获取文章表"},
+		{ApiGroup: "文章", Method: "GET", Path: "/article/getArticleList", Description: "获取文章列表"},
+
+		{ApiGroup: "活动", Method: "POST", Path: "/activity/createActivity", Description: "新增活动表"},
+		{ApiGroup: "活动", Method: "DELETE", Path: "/activity/deleteActivity", Description: "删除活动表"},
+		{ApiGroup: "活动", Method: "DELETE", Path: "/activity/deleteActivityByIds", Description: "批量删除活动表"},
+		{ApiGroup: "活动", Method: "PUT", Path: "/activity/updateActivity", Description: "更新活动表"},
+		{ApiGroup: "活动", Method: "GET", Path: "/activity/findActivity", Description: "根据ID获取活动表"},
+		{ApiGroup: "活动", Method: "GET", Path: "/activity/getActivityList", Description: "获取活动列表"},
+
+		{ApiGroup: "活动记录", Method: "POST", Path: "/activityRecord/createActivityRecord", Description: "新增活动记录表"},
+		{ApiGroup: "活动记录", Method: "DELETE", Path: "/activityRecord/deleteActivityRecord", Description: "删除活动记录表"},
+		{ApiGroup: "活动记录", Method: "DELETE", Path: "/activityRecord/deleteActivityRecordByIds", Description: "批量删除活动记录表"},
+		{ApiGroup: "活动记录", Method: "PUT", Path: "/activityRecord/updateActivityRecord", Description: "更新活动记录表"},
+		{ApiGroup: "活动记录", Method: "GET", Path: "/activityRecord/findActivityRecord", Description: "根据ID获取活动记录表"},
+		{ApiGroup: "活动记录", Method: "GET", Path: "/activityRecord/getActivityRecordList", Description: "获取活动记录列表"},
+
+		{ApiGroup: "评论", Method: "POST", Path: "/comment/createComment", Description: "新增评论表"},
+		{ApiGroup: "评论", Method: "DELETE", Path: "/comment/deleteComment", Description: "删除评论表"},
+		{ApiGroup: "评论", Method: "DELETE", Path: "/comment/deleteCommentByIds", Description: "批量删除评论表"},
+		{ApiGroup: "评论", Method: "PUT", Path: "/comment/updateComment", Description: "更新评论表"},
+		{ApiGroup: "评论", Method: "GET", Path: "/comment/findComment", Description: "根据ID获取评论表"},
+		{ApiGroup: "评论", Method: "GET", Path: "/comment/getCommentList", Description: "获取评论列表"},
+
+		{ApiGroup: "内推记录", Method: "POST", Path: "/introduce/createIntroduce", Description: "新增内推记录表"},
+		{ApiGroup: "内推记录", Method: "DELETE", Path: "/introduce/deleteIntroduce", Description: "删除内推记录表"},
+		{ApiGroup: "内推记录", Method: "DELETE", Path: "/introduce/deleteIntroduceByIds", Description: "批量删除内推记录表"},
+		{ApiGroup: "内推记录", Method: "PUT", Path: "/introduce/updateIntroduce", Description: "更新内推记录表"},
+		{ApiGroup: "内推记录", Method: "GET", Path: "/introduce/findIntroduce", Description: "根据ID获取内推记录表"},
+		{ApiGroup: "内推记录", Method: "GET", Path: "/introduce/getIntroduceList", Description: "获取内推记录列表"},
+
+		{ApiGroup: "信息", Method: "POST", Path: "/message/createMessage", Description: "新增信息表"},
+		{ApiGroup: "信息", Method: "DELETE", Path: "/message/deleteMessage", Description: "删除信息表"},
+		{ApiGroup: "信息", Method: "DELETE", Path: "/message/deleteMessageByIds", Description: "批量删除信息表"},
+		{ApiGroup: "信息", Method: "PUT", Path: "/message/updateMessage", Description: "更新信息表"},
+		{ApiGroup: "信息", Method: "GET", Path: "/message/findMessage", Description: "根据ID获取信息表"},
+		{ApiGroup: "信息", Method: "GET", Path: "/message/getMessageList", Description: "获取信息列表"},
+
+		{ApiGroup: "动态", Method: "POST", Path: "/moments/createMoments", Description: "新增动态表"},
+		{ApiGroup: "动态", Method: "DELETE", Path: "/moments/deleteMoments", Description: "删除动态表"},
+		{ApiGroup: "动态", Method: "DELETE", Path: "/moments/deleteMomentsByIds", Description: "批量删除动态表"},
+		{ApiGroup: "动态", Method: "PUT", Path: "/moments/updateMoments", Description: "更新动态表"},
+		{ApiGroup: "动态", Method: "GET", Path: "/moments/findMoments", Description: "根据ID获取动态表"},
+		{ApiGroup: "动态", Method: "GET", Path: "/moments/getMomentsList", Description: "获取动态列表"},
+
+		{ApiGroup: "组织信息", Method: "POST", Path: "/organizationInformation/createOrganizationInformation", Description: "新增组织信息表"},
+		{ApiGroup: "组织信息", Method: "DELETE", Path: "/organizationInformation/deleteOrganizationInformation", Description: "删除组织信息表"},
+		{ApiGroup: "组织信息", Method: "DELETE", Path: "/organizationInformation/deleteOrganizationInformationByIds", Description: "批量删除组织信息表"},
+		{ApiGroup: "组织信息", Method: "PUT", Path: "/organizationInformation/updateOrganizationInformation", Description: "更新组织信息表"},
+		{ApiGroup: "组织信息", Method: "GET", Path: "/organizationInformation/findOrganizationInformation", Description: "根据ID获取组织信息表"},
+		{ApiGroup: "组织信息", Method: "GET", Path: "/organizationInformation/getOrganizationInformationList", Description: "获取组织信息列表"},
 	}
 	if err := db.Create(&entities).Error; err != nil {
 		return ctx, errors.Wrap(err, sysModel.SysApi{}.TableName()+"表数据初始化失败!")

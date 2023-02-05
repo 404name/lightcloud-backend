@@ -2,6 +2,7 @@ package system
 
 import (
 	"context"
+
 	. "github.com/flipped-aurora/gin-vue-admin/server/model/system"
 	"github.com/flipped-aurora/gin-vue-admin/server/service/system"
 	"github.com/pkg/errors"
@@ -79,6 +80,17 @@ func (i *initMenu) InitializeData(ctx context.Context) (next context.Context, er
 		{MenuLevel: 0, Hidden: false, ParentId: "25", Path: "installPlugin", Name: "installPlugin", Component: "view/systemTools/installPlugin/index.vue", Sort: 1, Meta: Meta{Title: "插件安装", Icon: "box"}},
 		{MenuLevel: 0, Hidden: false, ParentId: "25", Path: "autoPlug", Name: "autoPlug", Component: "view/systemTools/autoPlug/autoPlug.vue", Sort: 2, Meta: Meta{Title: "插件模板", Icon: "folder"}},
 		{MenuLevel: 0, Hidden: false, ParentId: "25", Path: "plugin-email", Name: "plugin-email", Component: "plugin/email/view/index.vue", Sort: 3, Meta: Meta{Title: "邮件插件", Icon: "message"}},
+
+		// 前端项目
+		{MenuLevel: 0, Hidden: false, ParentId: "0", Path: "web", Name: "web", Component: "view/routerHolder.vue", Sort: 7, Meta: Meta{Title: "平台管理", Icon: "grid"}},
+		{MenuLevel: 0, Hidden: false, ParentId: "30", Path: "article", Name: "article", Component: "view/article/article.vue", Sort: 0, Meta: Meta{Title: "文章", Icon: "tools"}},
+		{MenuLevel: 0, Hidden: false, ParentId: "30", Path: "activity", Name: "activity", Component: "view/activity/activity.vue", Sort: 0, Meta: Meta{Title: "活动", Icon: "tools"}},
+		{MenuLevel: 0, Hidden: false, ParentId: "30", Path: "activityRecord", Name: "activityRecord", Component: "view/activityRecord/activityRecord.vue", Sort: 0, Meta: Meta{Title: "活动记录", Icon: "tools"}},
+		{MenuLevel: 0, Hidden: false, ParentId: "30", Path: "comment", Name: "comment", Component: "view/comment/comment.vue", Sort: 0, Meta: Meta{Title: "评论", Icon: "tools"}},
+		{MenuLevel: 0, Hidden: false, ParentId: "30", Path: "introduce", Name: "introduce", Component: "view/introduce/introduce.vue", Sort: 0, Meta: Meta{Title: "内推记录", Icon: "tools"}},
+		{MenuLevel: 0, Hidden: false, ParentId: "30", Path: "message", Name: "message", Component: "view/message/message.vue", Sort: 0, Meta: Meta{Title: "信息", Icon: "tools"}},
+		{MenuLevel: 0, Hidden: false, ParentId: "30", Path: "moments", Name: "moments", Component: "view/moments/moments.vue", Sort: 0, Meta: Meta{Title: "动态", Icon: "tools"}},
+		{MenuLevel: 0, Hidden: false, ParentId: "30", Path: "organizationInformation", Name: "organizationInformation", Component: "view/organizationInformation/organizationInformation.vue", Sort: 0, Meta: Meta{Title: "组织信息", Icon: "tools"}},
 	}
 	if err = db.Create(&entities).Error; err != nil {
 		return ctx, errors.Wrap(err, SysBaseMenu{}.TableName()+"表数据初始化失败!")
