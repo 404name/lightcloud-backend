@@ -3753,6 +3753,181 @@ const docTemplate = `{
                 }
             }
         },
+        "/homepage": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "首页相关接口"
+                ],
+                "summary": "首页信息接口",
+                "responses": {
+                    "0": {
+                        "description": "首页信息接口,返回最新动态，最热动态，最新活动",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/response.HomeInfoResponse"
+                                        },
+                                        "msg": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/homepage/momentList": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "首页相关接口"
+                ],
+                "summary": "获取首页动态",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "name": "content",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "name": "cover",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "创建时间",
+                        "name": "createdAt",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "name": "endCreatedAt",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "跳转过去id",
+                        "name": "fromId",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "跳转过去类别",
+                        "name": "fromType",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "主键ID",
+                        "name": "id",
+                        "in": "query"
+                    },
+                    {
+                        "type": "boolean",
+                        "name": "isTop",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "关键字",
+                        "name": "keyword",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "页码",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "每页大小",
+                        "name": "pageSize",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "name": "startCreatedAt",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "name": "title",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "name": "type",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "更新时间",
+                        "name": "updatedAt",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "谁发起的",
+                        "name": "userId",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "0": {
+                        "description": "分页获取社团列表,返回包括列表,总数,页码,每页数量",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/response.PageResult"
+                                        },
+                                        "msg": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
         "/homepage/organizationList": {
             "get": {
                 "security": [
@@ -5209,11 +5384,13 @@ const docTemplate = `{
                     },
                     {
                         "type": "integer",
+                        "description": "跳转过去id",
                         "name": "fromId",
                         "in": "query"
                     },
                     {
                         "type": "integer",
+                        "description": "跳转过去类别",
                         "name": "fromType",
                         "in": "query"
                     },
@@ -5246,6 +5423,7 @@ const docTemplate = `{
                     },
                     {
                         "type": "integer",
+                        "description": "谁发起的",
                         "name": "userId",
                         "in": "query"
                     }
@@ -5301,11 +5479,13 @@ const docTemplate = `{
                     },
                     {
                         "type": "integer",
+                        "description": "跳转过去id",
                         "name": "fromId",
                         "in": "query"
                     },
                     {
                         "type": "integer",
+                        "description": "跳转过去类别",
                         "name": "fromType",
                         "in": "query"
                     },
@@ -5361,6 +5541,7 @@ const docTemplate = `{
                     },
                     {
                         "type": "integer",
+                        "description": "谁发起的",
                         "name": "userId",
                         "in": "query"
                     }
@@ -7011,6 +7192,235 @@ const docTemplate = `{
                                     "type": "object",
                                     "properties": {
                                         "data": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/user/:id": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "用户相关接口"
+                ],
+                "summary": "获取用户信息",
+                "responses": {
+                    "200": {
+                        "description": "获取用户信息",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "additionalProperties": true
+                                        },
+                                        "msg": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/user/:id/activityList": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "用户相关接口"
+                ],
+                "summary": "获取用户参加的活动",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "关键字",
+                        "name": "keyword",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "页码",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "每页大小",
+                        "name": "pageSize",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "0": {
+                        "description": "分页获取用户参与活动列表",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/response.PageResult"
+                                        },
+                                        "msg": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/user/:id/commentList": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "用户相关接口"
+                ],
+                "summary": "获取用户发表的评论",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "关键字",
+                        "name": "keyword",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "页码",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "每页大小",
+                        "name": "pageSize",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "0": {
+                        "description": "分页获取用户评论列表",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/response.PageResult"
+                                        },
+                                        "msg": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/user/:id/momentList": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "用户相关接口"
+                ],
+                "summary": "获取用户相关动态",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "关键字",
+                        "name": "keyword",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "页码",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "每页大小",
+                        "name": "pageSize",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "0": {
+                        "description": "分页获取动态列表",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/response.PageResult"
+                                        },
+                                        "msg": {
                                             "type": "string"
                                         }
                                     }
@@ -8862,6 +9272,51 @@ const docTemplate = `{
                 }
             }
         },
+        "response.HomeInfoResponse": {
+            "type": "object",
+            "properties": {
+                "activityList": {
+                    "description": "最新活动列表",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/web.Activity"
+                    }
+                },
+                "describe": {
+                    "description": "网站描述",
+                    "type": "string"
+                },
+                "hotMomentList": {
+                    "description": "最热动态列表",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/web.Moments"
+                    }
+                },
+                "href": {
+                    "description": "网站跳转",
+                    "type": "string"
+                },
+                "hrefDesc": {
+                    "description": "外链描述",
+                    "type": "string"
+                },
+                "momentList": {
+                    "description": "最新动态列表",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/web.Moments"
+                    }
+                },
+                "organizationList": {
+                    "description": "推荐社团列表"
+                },
+                "version": {
+                    "description": "网站版本",
+                    "type": "string"
+                }
+            }
+        },
         "response.LoginResponse": {
             "type": "object",
             "properties": {
@@ -9760,6 +10215,9 @@ const docTemplate = `{
         "web.ActivityRecord": {
             "type": "object",
             "properties": {
+                "activity": {
+                    "$ref": "#/definitions/web.Activity"
+                },
                 "activityId": {
                     "type": "integer"
                 },
@@ -9967,9 +10425,11 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "fromId": {
+                    "description": "跳转过去id",
                     "type": "integer"
                 },
                 "fromType": {
+                    "description": "跳转过去类别",
                     "type": "integer"
                 },
                 "id": {
@@ -9990,6 +10450,7 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "userId": {
+                    "description": "谁发起的",
                     "type": "integer"
                 }
             }

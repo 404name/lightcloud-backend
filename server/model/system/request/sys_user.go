@@ -25,7 +25,7 @@ type Login struct {
 	CaptchaId string `json:"captchaId"` // 验证码ID
 }
 
-// Modify password structure
+// Modify password structureChangePasswordReq
 type ChangePasswordReq struct {
 	ID          uint   `json:"-"`           // 从 JWT 中提取 user id，避免越权
 	Password    string `json:"password"`    // 密码

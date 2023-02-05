@@ -937,6 +937,38 @@ definitions:
       file:
         $ref: '#/definitions/example.ExaFile'
     type: object
+  response.HomeInfoResponse:
+    properties:
+      activityList:
+        description: 最新活动列表
+        items:
+          $ref: '#/definitions/web.Activity'
+        type: array
+      describe:
+        description: 网站描述
+        type: string
+      hotMomentList:
+        description: 最热动态列表
+        items:
+          $ref: '#/definitions/web.Moments'
+        type: array
+      href:
+        description: 网站跳转
+        type: string
+      hrefDesc:
+        description: 外链描述
+        type: string
+      momentList:
+        description: 最新动态列表
+        items:
+          $ref: '#/definitions/web.Moments'
+        type: array
+      organizationList:
+        description: 推荐社团列表
+      version:
+        description: 网站版本
+        type: string
+    type: object
   response.LoginResponse:
     properties:
       expiresAt:
@@ -1567,6 +1599,8 @@ definitions:
     type: object
   web.ActivityRecord:
     properties:
+      activity:
+        $ref: '#/definitions/web.Activity'
       activityId:
         type: integer
       code:
@@ -1709,8 +1743,10 @@ definitions:
         description: 创建时间
         type: string
       fromId:
+        description: 跳转过去id
         type: integer
       fromType:
+        description: 跳转过去类别
         type: integer
       id:
         description: 主键ID
@@ -1725,6 +1761,7 @@ definitions:
         description: 更新时间
         type: string
       userId:
+        description: 谁发起的
         type: integer
     type: object
   web.OrganizationInformation:
@@ -3938,6 +3975,110 @@ paths:
       summary: 上传文件示例
       tags:
       - ExaFileUploadAndDownload
+  /homepage:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "0":
+          description: 首页信息接口,返回最新动态，最热动态，最新活动
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/response.HomeInfoResponse'
+                msg:
+                  type: string
+              type: object
+      security:
+      - ApiKeyAuth: []
+      summary: 首页信息接口
+      tags:
+      - 首页相关接口
+  /homepage/momentList:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - in: query
+        name: content
+        type: string
+      - in: query
+        name: cover
+        type: string
+      - description: 创建时间
+        in: query
+        name: createdAt
+        type: string
+      - in: query
+        name: endCreatedAt
+        type: string
+      - description: 跳转过去id
+        in: query
+        name: fromId
+        type: integer
+      - description: 跳转过去类别
+        in: query
+        name: fromType
+        type: integer
+      - description: 主键ID
+        in: query
+        name: id
+        type: integer
+      - in: query
+        name: isTop
+        type: boolean
+      - description: 关键字
+        in: query
+        name: keyword
+        type: string
+      - description: 页码
+        in: query
+        name: page
+        type: integer
+      - description: 每页大小
+        in: query
+        name: pageSize
+        type: integer
+      - in: query
+        name: startCreatedAt
+        type: string
+      - in: query
+        name: title
+        type: string
+      - in: query
+        name: type
+        type: string
+      - description: 更新时间
+        in: query
+        name: updatedAt
+        type: string
+      - description: 谁发起的
+        in: query
+        name: userId
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "0":
+          description: 分页获取社团列表,返回包括列表,总数,页码,每页数量
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/response.PageResult'
+                msg:
+                  type: string
+              type: object
+      security:
+      - ApiKeyAuth: []
+      summary: 获取首页动态
+      tags:
+      - 首页相关接口
   /homepage/organizationList:
     get:
       consumes:
@@ -4790,10 +4931,12 @@ paths:
         in: query
         name: createdAt
         type: string
-      - in: query
+      - description: 跳转过去id
+        in: query
         name: fromId
         type: integer
-      - in: query
+      - description: 跳转过去类别
+        in: query
         name: fromType
         type: integer
       - description: 主键ID
@@ -4813,7 +4956,8 @@ paths:
         in: query
         name: updatedAt
         type: string
-      - in: query
+      - description: 谁发起的
+        in: query
         name: userId
         type: integer
       produces:
@@ -4846,10 +4990,12 @@ paths:
       - in: query
         name: endCreatedAt
         type: string
-      - in: query
+      - description: 跳转过去id
+        in: query
         name: fromId
         type: integer
-      - in: query
+      - description: 跳转过去类别
+        in: query
         name: fromType
         type: integer
       - description: 主键ID
@@ -4884,7 +5030,8 @@ paths:
         in: query
         name: updatedAt
         type: string
-      - in: query
+      - description: 谁发起的
+        in: query
         name: userId
         type: integer
       produces:
@@ -5876,6 +6023,138 @@ paths:
       summary: 设置配置文件内容
       tags:
       - System
+  /user/:id:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 获取用户信息
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Response'
+            - properties:
+                data:
+                  additionalProperties: true
+                  type: object
+                msg:
+                  type: string
+              type: object
+      security:
+      - ApiKeyAuth: []
+      summary: 获取用户信息
+      tags:
+      - 用户相关接口
+  /user/:id/activityList:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: 关键字
+        in: query
+        name: keyword
+        type: string
+      - description: 页码
+        in: query
+        name: page
+        type: integer
+      - description: 每页大小
+        in: query
+        name: pageSize
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "0":
+          description: 分页获取用户参与活动列表
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/response.PageResult'
+                msg:
+                  type: string
+              type: object
+      security:
+      - ApiKeyAuth: []
+      summary: 获取用户参加的活动
+      tags:
+      - 用户相关接口
+  /user/:id/commentList:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: 关键字
+        in: query
+        name: keyword
+        type: string
+      - description: 页码
+        in: query
+        name: page
+        type: integer
+      - description: 每页大小
+        in: query
+        name: pageSize
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "0":
+          description: 分页获取用户评论列表
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/response.PageResult'
+                msg:
+                  type: string
+              type: object
+      security:
+      - ApiKeyAuth: []
+      summary: 获取用户发表的评论
+      tags:
+      - 用户相关接口
+  /user/:id/momentList:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: 关键字
+        in: query
+        name: keyword
+        type: string
+      - description: 页码
+        in: query
+        name: page
+        type: integer
+      - description: 每页大小
+        in: query
+        name: pageSize
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "0":
+          description: 分页获取动态列表
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/response.PageResult'
+                msg:
+                  type: string
+              type: object
+      security:
+      - ApiKeyAuth: []
+      summary: 获取用户相关动态
+      tags:
+      - 用户相关接口
   /user/SetSelfInfo:
     put:
       consumes:

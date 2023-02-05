@@ -61,6 +61,7 @@ func Routers() *gin.Engine {
 		webRouter.InitMomentsRouter(PublicGroup)
 		webRouter.InitOrganizationInformationRouter(PublicGroup)
 		webRouter.InitHomePageRouter(PublicGroup)
+		webRouter.InitWebUserRouter(PublicGroup)
 	}
 	PrivateGroup := Router.Group("")
 	PrivateGroup.Use(middleware.JWTAuth()).Use(middleware.CasbinHandler())
