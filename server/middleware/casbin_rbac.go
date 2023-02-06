@@ -1,12 +1,13 @@
 package middleware
 
 import (
+	"strconv"
+
 	"github.com/flipped-aurora/gin-vue-admin/server/global"
 	"github.com/flipped-aurora/gin-vue-admin/server/model/common/response"
 	"github.com/flipped-aurora/gin-vue-admin/server/service"
 	"github.com/flipped-aurora/gin-vue-admin/server/utils"
 	"github.com/gin-gonic/gin"
-	"strconv"
 )
 
 var casbinService = service.ServiceGroupApp.SystemServiceGroup.CasbinService
@@ -25,7 +26,7 @@ func CasbinHandler() gin.HandlerFunc {
 			e := casbinService.Casbin() // 判断策略中是否存在
 			success, _ := e.Enforce(sub, obj, act)
 			if !success {
-				response.FailWithDetailed(gin.H{}, "权限不足", c)
+				response.FailWithDetailed(gin.H{}, "你没有相关权限", c)
 				c.Abort()
 				return
 			}

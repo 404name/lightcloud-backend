@@ -716,6 +716,21 @@ definitions:
         description: 密码
         type: string
     type: object
+  request.CollectionRequest:
+    properties:
+      cover:
+        description: 社团封面
+        type: string
+      describe:
+        description: 社团描述
+        type: string
+      id:
+        description: 社团id
+        type: integer
+      name:
+        description: 社团名字
+        type: string
+    type: object
   request.Empty:
     type: object
   request.GetAuthorityId:
@@ -903,6 +918,13 @@ definitions:
         type: integer
       pageSize:
         description: 每页大小
+        type: integer
+    type: object
+  request.VoteRequest:
+    properties:
+      approval:
+        type: boolean
+      commentId:
         type: integer
     type: object
   response.Email:
@@ -1533,6 +1555,8 @@ definitions:
       enable:
         description: 用户是否被冻结 1正常 2冻结
         type: integer
+      extra:
+        type: string
       headerImg:
         description: 用户头像
         type: string
@@ -1580,6 +1604,8 @@ definitions:
         type: integer
       endTime:
         type: string
+      extra:
+        type: string
       id:
         description: 主键ID
         type: integer
@@ -1608,6 +1634,8 @@ definitions:
       createdAt:
         description: 创建时间
         type: string
+      extra:
+        type: string
       id:
         description: 主键ID
         type: integer
@@ -1634,6 +1662,8 @@ definitions:
       createdAt:
         description: 创建时间
         type: string
+      extra:
+        type: string
       id:
         description: 主键ID
         type: integer
@@ -1659,6 +1689,8 @@ definitions:
         description: 创建时间
         type: string
       describe:
+        type: string
+      extra:
         type: string
       id:
         description: 主键ID
@@ -1693,6 +1725,8 @@ definitions:
         type: string
       createdAt:
         description: 创建时间
+        type: string
+      extra:
         type: string
       id:
         description: 主键ID
@@ -1741,6 +1775,8 @@ definitions:
         type: string
       createdAt:
         description: 创建时间
+        type: string
+      extra:
         type: string
       fromId:
         description: 跳转过去id
@@ -1890,6 +1926,9 @@ paths:
       - in: query
         name: endTime
         type: string
+      - in: query
+        name: extra
+        type: string
       - description: 主键ID
         in: query
         name: id
@@ -1954,6 +1993,9 @@ paths:
         type: string
       - in: query
         name: endTime
+        type: string
+      - in: query
+        name: extra
         type: string
       - description: 主键ID
         in: query
@@ -2112,6 +2154,9 @@ paths:
         in: query
         name: createdAt
         type: string
+      - in: query
+        name: extra
+        type: string
       - description: 主键ID
         in: query
         name: id
@@ -2165,6 +2210,9 @@ paths:
       - in: query
         name: endScore
         type: integer
+      - in: query
+        name: extra
+        type: string
       - description: 主键ID
         in: query
         name: id
@@ -2518,6 +2566,9 @@ paths:
         in: query
         name: createdAt
         type: string
+      - in: query
+        name: extra
+        type: string
       - description: 主键ID
         in: query
         name: id
@@ -2573,6 +2624,9 @@ paths:
         type: string
       - in: query
         name: endCreatedAt
+        type: string
+      - in: query
+        name: extra
         type: string
       - description: 主键ID
         in: query
@@ -3453,6 +3507,9 @@ paths:
       - in: query
         name: describe
         type: string
+      - in: query
+        name: extra
+        type: string
       - description: 主键ID
         in: query
         name: id
@@ -3517,6 +3574,9 @@ paths:
         type: string
       - in: query
         name: endCreatedAt
+        type: string
+      - in: query
+        name: extra
         type: string
       - description: 主键ID
         in: query
@@ -4016,6 +4076,9 @@ paths:
       - in: query
         name: endCreatedAt
         type: string
+      - in: query
+        name: extra
+        type: string
       - description: 跳转过去id
         in: query
         name: fromId
@@ -4243,6 +4306,9 @@ paths:
         in: query
         name: createdAt
         type: string
+      - in: query
+        name: extra
+        type: string
       - description: 主键ID
         in: query
         name: id
@@ -4286,6 +4352,9 @@ paths:
         type: string
       - in: query
         name: endCreatedAt
+        type: string
+      - in: query
+        name: extra
         type: string
       - description: 主键ID
         in: query
@@ -4931,6 +5000,9 @@ paths:
         in: query
         name: createdAt
         type: string
+      - in: query
+        name: extra
+        type: string
       - description: 跳转过去id
         in: query
         name: fromId
@@ -4989,6 +5061,9 @@ paths:
         type: string
       - in: query
         name: endCreatedAt
+        type: string
+      - in: query
+        name: extra
         type: string
       - description: 跳转过去id
         in: query
@@ -6212,6 +6287,29 @@ paths:
       summary: 用户注册账号
       tags:
       - SysUser
+  /user/attendActivity:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 创建ActivityRecord
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/web.ActivityRecord'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"success":true,"data":{},"msg":"获取成功"}'
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: 参与活动
+      tags:
+      - 用户相关接口
   /user/changePassword:
     post:
       parameters:
@@ -6238,6 +6336,144 @@ paths:
       summary: 用户修改密码
       tags:
       - SysUser
+  /user/collection:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 收藏社团
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/request.CollectionRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"success":true,"data":{},"msg":"获取成功"}'
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: 收藏社团/文章
+      tags:
+      - 用户相关接口
+  /user/creatComment:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 创建Comment(在extra里面携带封面)
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/web.Comment'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"success":true,"data":{},"msg":"获取成功"}'
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: 发布评论
+      tags:
+      - 用户相关接口
+  /user/createActivity:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 创建Activity
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/web.Activity'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"success":true,"data":{},"msg":"获取成功"}'
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: 发布活动
+      tags:
+      - 用户相关接口
+  /user/createArticle:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 创建Article
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/web.Article'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"success":true,"data":{},"msg":"获取成功"}'
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: 发布文章
+      tags:
+      - 用户相关接口
+  /user/createInformation:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 创建OrganizationInformation
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/web.OrganizationInformation'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"success":true,"data":{},"msg":"获取成功"}'
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: 填写简历/添加社团信息
+      tags:
+      - 用户相关接口
+  /user/createIntroduce:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 创建Introduce
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/web.Introduce'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"success":true,"data":{},"msg":"获取成功"}'
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: 发布内推
+      tags:
+      - 用户相关接口
   /user/deleteUser:
     delete:
       consumes:
@@ -6433,6 +6669,29 @@ paths:
       summary: 设置用户信息
       tags:
       - SysUser
+  /user/voteComment:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 点赞or点踩评论
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/request.VoteRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"success":true,"data":{},"msg":"获取成功"}'
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: 点赞/点踩评论
+      tags:
+      - 用户相关接口
 securityDefinitions:
   ApiKeyAuth:
     in: header

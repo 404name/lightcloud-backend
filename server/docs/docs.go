@@ -185,6 +185,11 @@ const docTemplate = `{
                         "in": "query"
                     },
                     {
+                        "type": "string",
+                        "name": "extra",
+                        "in": "query"
+                    },
+                    {
                         "type": "integer",
                         "description": "主键ID",
                         "name": "id",
@@ -289,6 +294,11 @@ const docTemplate = `{
                     {
                         "type": "string",
                         "name": "endTime",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "name": "extra",
                         "in": "query"
                     },
                     {
@@ -549,6 +559,11 @@ const docTemplate = `{
                         "in": "query"
                     },
                     {
+                        "type": "string",
+                        "name": "extra",
+                        "in": "query"
+                    },
+                    {
                         "type": "integer",
                         "description": "主键ID",
                         "name": "id",
@@ -633,6 +648,11 @@ const docTemplate = `{
                     {
                         "type": "integer",
                         "name": "endScore",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "name": "extra",
                         "in": "query"
                     },
                     {
@@ -1243,6 +1263,11 @@ const docTemplate = `{
                         "in": "query"
                     },
                     {
+                        "type": "string",
+                        "name": "extra",
+                        "in": "query"
+                    },
+                    {
                         "type": "integer",
                         "description": "主键ID",
                         "name": "id",
@@ -1332,6 +1357,11 @@ const docTemplate = `{
                     {
                         "type": "string",
                         "name": "endCreatedAt",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "name": "extra",
                         "in": "query"
                     },
                     {
@@ -2869,6 +2899,11 @@ const docTemplate = `{
                         "in": "query"
                     },
                     {
+                        "type": "string",
+                        "name": "extra",
+                        "in": "query"
+                    },
+                    {
                         "type": "integer",
                         "description": "主键ID",
                         "name": "id",
@@ -2973,6 +3008,11 @@ const docTemplate = `{
                     {
                         "type": "string",
                         "name": "endCreatedAt",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "name": "extra",
                         "in": "query"
                     },
                     {
@@ -3835,6 +3875,11 @@ const docTemplate = `{
                         "in": "query"
                     },
                     {
+                        "type": "string",
+                        "name": "extra",
+                        "in": "query"
+                    },
+                    {
                         "type": "integer",
                         "description": "跳转过去id",
                         "name": "fromId",
@@ -4216,6 +4261,11 @@ const docTemplate = `{
                         "in": "query"
                     },
                     {
+                        "type": "string",
+                        "name": "extra",
+                        "in": "query"
+                    },
+                    {
                         "type": "integer",
                         "description": "主键ID",
                         "name": "id",
@@ -4285,6 +4335,11 @@ const docTemplate = `{
                     {
                         "type": "string",
                         "name": "endCreatedAt",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "name": "extra",
                         "in": "query"
                     },
                     {
@@ -5383,6 +5438,11 @@ const docTemplate = `{
                         "in": "query"
                     },
                     {
+                        "type": "string",
+                        "name": "extra",
+                        "in": "query"
+                    },
+                    {
                         "type": "integer",
                         "description": "跳转过去id",
                         "name": "fromId",
@@ -5475,6 +5535,11 @@ const docTemplate = `{
                     {
                         "type": "string",
                         "name": "endCreatedAt",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "name": "extra",
                         "in": "query"
                     },
                     {
@@ -7530,6 +7595,44 @@ const docTemplate = `{
                 }
             }
         },
+        "/user/attendActivity": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "用户相关接口"
+                ],
+                "summary": "参与活动",
+                "parameters": [
+                    {
+                        "description": "创建ActivityRecord",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/web.ActivityRecord"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{\"success\":true,\"data\":{},\"msg\":\"获取成功\"}",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
         "/user/changePassword": {
             "post": {
                 "security": [
@@ -7572,6 +7675,234 @@ const docTemplate = `{
                                     }
                                 }
                             ]
+                        }
+                    }
+                }
+            }
+        },
+        "/user/collection": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "用户相关接口"
+                ],
+                "summary": "收藏社团/文章",
+                "parameters": [
+                    {
+                        "description": "收藏社团",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.CollectionRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{\"success\":true,\"data\":{},\"msg\":\"获取成功\"}",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/user/creatComment": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "用户相关接口"
+                ],
+                "summary": "发布评论",
+                "parameters": [
+                    {
+                        "description": "创建Comment(在extra里面携带封面)",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/web.Comment"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{\"success\":true,\"data\":{},\"msg\":\"获取成功\"}",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/user/createActivity": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "用户相关接口"
+                ],
+                "summary": "发布活动",
+                "parameters": [
+                    {
+                        "description": "创建Activity",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/web.Activity"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{\"success\":true,\"data\":{},\"msg\":\"获取成功\"}",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/user/createArticle": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "用户相关接口"
+                ],
+                "summary": "发布文章",
+                "parameters": [
+                    {
+                        "description": "创建Article",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/web.Article"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{\"success\":true,\"data\":{},\"msg\":\"获取成功\"}",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/user/createInformation": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "用户相关接口"
+                ],
+                "summary": "填写简历/添加社团信息",
+                "parameters": [
+                    {
+                        "description": "创建OrganizationInformation",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/web.OrganizationInformation"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{\"success\":true,\"data\":{},\"msg\":\"获取成功\"}",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/user/createIntroduce": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "用户相关接口"
+                ],
+                "summary": "发布内推",
+                "parameters": [
+                    {
+                        "description": "创建Introduce",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/web.Introduce"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{\"success\":true,\"data\":{},\"msg\":\"获取成功\"}",
+                        "schema": {
+                            "type": "string"
                         }
                     }
                 }
@@ -7919,6 +8250,44 @@ const docTemplate = `{
                                     }
                                 }
                             ]
+                        }
+                    }
+                }
+            }
+        },
+        "/user/voteComment": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "用户相关接口"
+                ],
+                "summary": "点赞/点踩评论",
+                "parameters": [
+                    {
+                        "description": "点赞or点踩评论",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.VoteRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{\"success\":true,\"data\":{},\"msg\":\"获取成功\"}",
+                        "schema": {
+                            "type": "string"
                         }
                     }
                 }
@@ -8955,6 +9324,27 @@ const docTemplate = `{
                 }
             }
         },
+        "request.CollectionRequest": {
+            "type": "object",
+            "properties": {
+                "cover": {
+                    "description": "社团封面",
+                    "type": "string"
+                },
+                "describe": {
+                    "description": "社团描述",
+                    "type": "string"
+                },
+                "id": {
+                    "description": "社团id",
+                    "type": "integer"
+                },
+                "name": {
+                    "description": "社团名字",
+                    "type": "string"
+                }
+            }
+        },
         "request.Empty": {
             "type": "object"
         },
@@ -9219,6 +9609,17 @@ const docTemplate = `{
                 },
                 "pageSize": {
                     "description": "每页大小",
+                    "type": "integer"
+                }
+            }
+        },
+        "request.VoteRequest": {
+            "type": "object",
+            "properties": {
+                "approval": {
+                    "type": "boolean"
+                },
+                "commentId": {
                     "type": "integer"
                 }
             }
@@ -10120,6 +10521,9 @@ const docTemplate = `{
                     "description": "用户是否被冻结 1正常 2冻结",
                     "type": "integer"
                 },
+                "extra": {
+                    "type": "string"
+                },
                 "headerImg": {
                     "description": "用户头像",
                     "type": "string"
@@ -10187,6 +10591,9 @@ const docTemplate = `{
                 "endTime": {
                     "type": "string"
                 },
+                "extra": {
+                    "type": "string"
+                },
                 "id": {
                     "description": "主键ID",
                     "type": "integer"
@@ -10228,6 +10635,9 @@ const docTemplate = `{
                     "description": "创建时间",
                     "type": "string"
                 },
+                "extra": {
+                    "type": "string"
+                },
                 "id": {
                     "description": "主键ID",
                     "type": "integer"
@@ -10266,6 +10676,9 @@ const docTemplate = `{
                     "description": "创建时间",
                     "type": "string"
                 },
+                "extra": {
+                    "type": "string"
+                },
                 "id": {
                     "description": "主键ID",
                     "type": "integer"
@@ -10302,6 +10715,9 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "describe": {
+                    "type": "string"
+                },
+                "extra": {
                     "type": "string"
                 },
                 "id": {
@@ -10352,6 +10768,9 @@ const docTemplate = `{
                 },
                 "createdAt": {
                     "description": "创建时间",
+                    "type": "string"
+                },
+                "extra": {
                     "type": "string"
                 },
                 "id": {
@@ -10422,6 +10841,9 @@ const docTemplate = `{
                 },
                 "createdAt": {
                     "description": "创建时间",
+                    "type": "string"
+                },
+                "extra": {
                     "type": "string"
                 },
                 "fromId": {

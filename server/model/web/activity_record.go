@@ -15,6 +15,7 @@ type ActivityRecord struct {
 
 	Note     string    `json:"note" form:"note" gorm:"column:note;comment:;size:255;"`
 	Score    *int      `json:"score" form:"score" gorm:"column:score;comment:;size:10;"`
+	Extra    string    `json:"extra" form:"extra" gorm:"column:extra;comment:附加信息;size:255;"`
 	Activity *Activity `json:"activity,omitempty"`
 }
 

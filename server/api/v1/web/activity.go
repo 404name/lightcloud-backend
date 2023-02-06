@@ -34,7 +34,7 @@ func (activityApi *ActivityApi) CreateActivity(c *gin.Context) {
 		return
 	}
 	activity.CreatedBy = utils.GetUserID(c)
-	if err := activityService.CreateActivity(activity); err != nil {
+	if err := activityService.CreateActivity(&activity); err != nil {
 		global.GVA_LOG.Error("创建失败!", zap.Error(err))
 		response.FailWithMessage("创建失败", c)
 	} else {

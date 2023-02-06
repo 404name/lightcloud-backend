@@ -3,6 +3,7 @@ package utils
 import (
 	"fmt"
 	"reflect"
+	"strconv"
 	"strings"
 )
 
@@ -35,4 +36,32 @@ func StructToMap(obj interface{}) map[string]interface{} {
 
 func ArrayToString(array []interface{}) string {
 	return strings.Replace(strings.Trim(fmt.Sprint(array), "[]"), " ", ",", -1)
+}
+
+func IntToPoint(i int) *int {
+	return &i
+}
+
+func BoolToPoint(b bool) *bool {
+	return &b
+}
+
+func UintToInt(u uint) *int {
+	i := int(u)
+	return &i
+}
+
+func StringToSlice(str string) []uint {
+	str = strings.Trim(str, "[]")
+	numbers := strings.Split(str, " ")
+	var slice []uint
+	for _, num := range numbers {
+		i, err := strconv.Atoi(num)
+		if err != nil {
+			fmt.Println("Error converting string to int:", err)
+			return slice
+		}
+		slice = append(slice, uint(i))
+	}
+	return slice
 }

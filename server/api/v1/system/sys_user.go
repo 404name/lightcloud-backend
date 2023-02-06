@@ -85,6 +85,7 @@ func (b *BaseApi) TokenNext(c *gin.Context, user system.SysUser) {
 		ID:          user.ID,
 		NickName:    user.NickName,
 		Username:    user.Username,
+		HeaderImg:   user.HeaderImg,
 		AuthorityId: user.AuthorityId,
 	})
 	token, err := j.CreateToken(claims)

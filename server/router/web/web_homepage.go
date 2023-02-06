@@ -9,8 +9,8 @@ type HomePageRouter struct {
 }
 
 // InitHomePageRouter 初始化 HomePage 路由信息
-func (s *HomePageRouter) InitHomePageRouter(Router *gin.RouterGroup) {
-	// homePageRouter := Router.Group("homepage").Use(middleware.OperationRecord())
+func (s *HomePageRouter) InitHomePageRouter(Router *gin.RouterGroup, AuthRouter *gin.RouterGroup) {
+	// homePageRouter := AuthRouter.Group("homepage")
 	homePageRouterWithoutRecord := Router.Group("homepage")
 	var homePageApi = v1.ApiGroupApp.WebApiGroup.WebHomePageApi
 	{

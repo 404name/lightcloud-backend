@@ -1,6 +1,7 @@
 package system
 
 import (
+	"encoding/json"
 	"errors"
 	"fmt"
 
@@ -237,4 +238,35 @@ func (userService *UserService) FindUserByUuid(uuid string) (user *system.SysUse
 func (userService *UserService) ResetPassword(ID uint) (err error) {
 	err = global.GVA_DB.Model(&system.SysUser{}).Where("id = ?", ID).Update("password", utils.BcryptHash("123456")).Error
 	return err
+}
+
+// @author: [piexlmax](https://github.com/piexlmax)
+// @description: 添加收藏
+func (userService *UserService) AddOrRemoveCollection(uid uint, organizationId uint) (ifDel bool, err error) {
+	var user system.SysUser
+	extra := make(map[string]interface{})
+	if err = global.GVA_DB.Where("`id` = ?", uid).First(&user).Error; err != nil {
+		return false, err
+	}
+	json.Unmarshal([]byte(user.Extra), &extra)
+	var list []uint
+
+	list = utils.StringToSlice(fmt.Sprintf("%v", extra["organizationList"]))
+
+	ok := false
+	for i, id := range list {
+		if id == organizationId {
+			list = append(list[:i], list[i+1:]...)
+			ok = true
+			break
+		}
+	}
+	if !ok {
+		list = append(list, organizationId)
+	}
+	extra["organizationList"] = list
+	res, _ := json.Marshal(extra)
+	// 插入更新
+	err = global.GVA_DB.Model(&user).Update("extra", string(res)).Error
+	return ok, err
 }

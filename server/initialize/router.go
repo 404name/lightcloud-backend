@@ -39,7 +39,10 @@ func Routers() *gin.Engine {
 	// 方便统一添加路由组前缀 多服务器上线使用
 
 	PublicGroup := Router.Group("")
-	PublicGroup.Use(middleware.DefaultLimit())
+	PublicAuthGroup := Router.Group("")
+	PublicGroup.Use(middleware.DefaultLimit()) // 统一鉴权
+	// TODO 先暂时不做权限验证.Use(middleware.CasbinHandler())
+	PublicAuthGroup.Use(middleware.DefaultLimit()).Use(middleware.JWTAuth()).Use(middleware.Signature()).Use(middleware.OperationRecord())
 	{
 		// 健康监测
 		PublicGroup.GET("/health", func(c *gin.Context) {
@@ -60,8 +63,9 @@ func Routers() *gin.Engine {
 		webRouter.InitMessageRouter(PublicGroup)
 		webRouter.InitMomentsRouter(PublicGroup)
 		webRouter.InitOrganizationInformationRouter(PublicGroup)
-		webRouter.InitHomePageRouter(PublicGroup)
-		webRouter.InitWebUserRouter(PublicGroup)
+
+		webRouter.InitHomePageRouter(PublicGroup, PublicAuthGroup)
+		webRouter.InitWebUserRouter(PublicGroup, PublicAuthGroup)
 	}
 	PrivateGroup := Router.Group("")
 	PrivateGroup.Use(middleware.JWTAuth()).Use(middleware.CasbinHandler())

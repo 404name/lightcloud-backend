@@ -1,6 +1,8 @@
 package utils
 
 import (
+	"encoding/json"
+
 	"github.com/flipped-aurora/gin-vue-admin/server/global"
 	systemReq "github.com/flipped-aurora/gin-vue-admin/server/model/system/request"
 	"github.com/gin-gonic/gin"
@@ -15,6 +17,23 @@ func GetClaims(c *gin.Context) (*systemReq.CustomClaims, error) {
 		global.GVA_LOG.Error("从Gin的Context中获取从jwt解析信息失败, 请检查请求头是否存在x-token且claims是否为规定结构")
 	}
 	return claims, err
+}
+
+func GetUserExtra(c *gin.Context) string {
+	type H map[string]interface{}
+	if claims, err := GetClaims(c); err != nil {
+		return ""
+	} else {
+		if extra, err := json.Marshal(H{
+			"userId":   claims.ID,
+			"username": claims.Username,
+			"headImg":  claims.HeaderImg,
+		}); err != nil {
+			return ""
+		} else {
+			return string(extra)
+		}
+	}
 }
 
 // GetUserID 从Gin的Context中获取从jwt解析出来的用户ID
