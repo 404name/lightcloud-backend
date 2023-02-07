@@ -5659,6 +5659,132 @@ const docTemplate = `{
                 }
             }
         },
+        "/organization/:id/homePage": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "社团\u0026活动模块"
+                ],
+                "summary": "获取社团主页",
+                "responses": {
+                    "0": {
+                        "description": "",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/response.OrganizationHomePageResp"
+                                        },
+                                        "msg": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/organization/activity/:id": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "社团\u0026活动模块"
+                ],
+                "summary": "活动详细页",
+                "responses": {
+                    "0": {
+                        "description": "分页获取社团列表,返回包括列表,总数,页码,每页数量",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/response.ActivityResp"
+                                        },
+                                        "msg": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/organization/activity/:id/emailAll": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "社团\u0026活动模块"
+                ],
+                "summary": "发送邮箱通知参与人员(开发中)",
+                "responses": {
+                    "0": {
+                        "description": "分页获取社团列表,返回包括列表,总数,页码,每页数量",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/response.ActivityResp"
+                                        },
+                                        "msg": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
         "/organizationInformation/createOrganizationInformation": {
             "post": {
                 "security": [
@@ -9335,13 +9461,13 @@ const docTemplate = `{
                     "description": "社团描述",
                     "type": "string"
                 },
-                "id": {
-                    "description": "社团id",
-                    "type": "integer"
-                },
                 "name": {
                     "description": "社团名字",
                     "type": "string"
+                },
+                "oid": {
+                    "description": "社团id",
+                    "type": "integer"
                 }
             }
         },
@@ -9624,6 +9750,48 @@ const docTemplate = `{
                 }
             }
         },
+        "response.ActivityResp": {
+            "type": "object",
+            "properties": {
+                "baseInfo": {
+                    "description": "基础信息",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/web.Activity"
+                        }
+                    ]
+                },
+                "comment": {
+                    "description": "评论",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/web.Comment"
+                    }
+                },
+                "extraInfo": {
+                    "description": "参与人员",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/web.ActivityRecord"
+                    }
+                },
+                "moments": {
+                    "description": "动态",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/web.Moments"
+                    }
+                },
+                "organization": {
+                    "description": "发起社团",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/system.SysUser"
+                        }
+                    ]
+                }
+            }
+        },
         "response.Email": {
             "type": "object",
             "properties": {
@@ -9729,6 +9897,47 @@ const docTemplate = `{
                 },
                 "user": {
                     "$ref": "#/definitions/system.SysUser"
+                }
+            }
+        },
+        "response.OrganizationHomePageResp": {
+            "type": "object",
+            "properties": {
+                "activity": {
+                    "description": "活动",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/web.Activity"
+                    }
+                },
+                "baseInfo": {
+                    "description": "基础信息",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/system.SysUser"
+                        }
+                    ]
+                },
+                "comment": {
+                    "description": "评价信息",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/web.Comment"
+                    }
+                },
+                "extraInfo": {
+                    "description": "附加模块",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/web.OrganizationInformation"
+                    }
+                },
+                "moments": {
+                    "description": "动态",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/web.Moments"
+                    }
                 }
             }
         },

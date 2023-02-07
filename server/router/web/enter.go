@@ -15,4 +15,5 @@ type RouterGroup struct {
 
 	HomePageRouter
 	WebUserRouter
+	WebOrganizationRouter
 }

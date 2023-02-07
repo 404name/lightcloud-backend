@@ -724,12 +724,12 @@ definitions:
       describe:
         description: 社团描述
         type: string
-      id:
-        description: 社团id
-        type: integer
       name:
         description: 社团名字
         type: string
+      oid:
+        description: 社团id
+        type: integer
     type: object
   request.Empty:
     type: object
@@ -927,6 +927,32 @@ definitions:
       commentId:
         type: integer
     type: object
+  response.ActivityResp:
+    properties:
+      baseInfo:
+        allOf:
+        - $ref: '#/definitions/web.Activity'
+        description: 基础信息
+      comment:
+        description: 评论
+        items:
+          $ref: '#/definitions/web.Comment'
+        type: array
+      extraInfo:
+        description: 参与人员
+        items:
+          $ref: '#/definitions/web.ActivityRecord'
+        type: array
+      moments:
+        description: 动态
+        items:
+          $ref: '#/definitions/web.Moments'
+        type: array
+      organization:
+        allOf:
+        - $ref: '#/definitions/system.SysUser'
+        description: 发起社团
+    type: object
   response.Email:
     properties:
       body:
@@ -999,6 +1025,33 @@ definitions:
         type: string
       user:
         $ref: '#/definitions/system.SysUser'
+    type: object
+  response.OrganizationHomePageResp:
+    properties:
+      activity:
+        description: 活动
+        items:
+          $ref: '#/definitions/web.Activity'
+        type: array
+      baseInfo:
+        allOf:
+        - $ref: '#/definitions/system.SysUser'
+        description: 基础信息
+      comment:
+        description: 评价信息
+        items:
+          $ref: '#/definitions/web.Comment'
+        type: array
+      extraInfo:
+        description: 附加模块
+        items:
+          $ref: '#/definitions/web.OrganizationInformation'
+        type: array
+      moments:
+        description: 动态
+        items:
+          $ref: '#/definitions/web.Moments'
+        type: array
     type: object
   response.PageResult:
     properties:
@@ -5144,6 +5197,75 @@ paths:
       summary: 更新Moments
       tags:
       - Moments
+  /organization/:id/homePage:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "0":
+          description: ""
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/response.OrganizationHomePageResp'
+                msg:
+                  type: string
+              type: object
+      security:
+      - ApiKeyAuth: []
+      summary: 获取社团主页
+      tags:
+      - 社团&活动模块
+  /organization/activity/:id:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "0":
+          description: 分页获取社团列表,返回包括列表,总数,页码,每页数量
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/response.ActivityResp'
+                msg:
+                  type: string
+              type: object
+      security:
+      - ApiKeyAuth: []
+      summary: 活动详细页
+      tags:
+      - 社团&活动模块
+  /organization/activity/:id/emailAll:
+    post:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "0":
+          description: 分页获取社团列表,返回包括列表,总数,页码,每页数量
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/response.ActivityResp'
+                msg:
+                  type: string
+              type: object
+      security:
+      - ApiKeyAuth: []
+      summary: 发送邮箱通知参与人员(开发中)
+      tags:
+      - 社团&活动模块
   /organizationInformation/createOrganizationInformation:
     post:
       consumes:

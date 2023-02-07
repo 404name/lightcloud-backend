@@ -88,6 +88,6 @@ func (activityService *ActivityService) GetActivityInfoList(info webReq.Activity
 		return
 	}
 
-	err = db.Limit(limit).Offset(offset).Find(&activitys).Error
+	err = db.Order("id desc").Limit(limit).Offset(offset).Find(&activitys).Error
 	return activitys, total, err
 }
