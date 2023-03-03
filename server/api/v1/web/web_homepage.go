@@ -89,9 +89,9 @@ func (homePageApi *WebHomePageApi) GetHomeInfo(c *gin.Context) {
 
 	response.OkWithDetailed(webResp.HomeInfoResponse{
 		Version:          "v1.0.0",
-		Describe:         "v1.0.0版本上线了参与调研反馈bug赢好礼",
-		Href:             "https://www.bilibili.com/",
-		HrefDesc:         "了解更多",
+		Describe:         "v1.0.0欢迎使用轻云社区",
+		Href:             "https://wenjuan.feishu.cn/m?t=scfKsSAOPuKi-3imu",
+		HrefDesc:         "创建社团",
 		MomentList:       momentList,
 		HotMomentList:    hotMomentList,
 		ActivityList:     activityList,

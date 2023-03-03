@@ -67,6 +67,13 @@ func (commentService *CommentService) GetCommentInfoList(info webReq.CommentSear
 	if info.UserId != nil {
 		db = db.Where("userId = ?", info.UserId)
 	}
+	if info.SortBy != "" {
+		if info.SortBy == "hot" {
+			db = db.Order("voteUpNum desc")
+		} else {
+			db = db.Order("id desc")
+		}
+	}
 	err = db.Count(&total).Error
 	if err != nil {
 		return

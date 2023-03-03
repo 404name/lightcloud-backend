@@ -56,7 +56,7 @@ func (WebOrganizationApi *WebOrganizationApi) GetHomePage(c *gin.Context) {
 	}
 	// 获取社团评价
 	if resp.Comment, _, err = commentService.GetCommentInfoList(
-		webReq.CommentSearch{PageInfo: page, Comment: web.Comment{ToId: &id, ToType: utils.IntToPoint(global.CommentTypeUser)}}); err != nil {
+		webReq.CommentSearch{PageInfo: page, SortBy: "last", Comment: web.Comment{ToId: &id, ToType: utils.IntToPoint(global.CommentTypeUser)}}); err != nil {
 		global.GVA_LOG.Error("获取失败!", zap.Error(err))
 		response.FailWithMessage("获取失败", c)
 		return

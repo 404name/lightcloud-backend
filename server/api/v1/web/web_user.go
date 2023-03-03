@@ -210,7 +210,7 @@ func (userApi *WebUserApi) CreatComment(c *gin.Context) {
 			Content:  comment.Content,
 			Cover:    cover,
 			FromId:   comment.ToId,
-			FromType: utils.IntToPoint(0),
+			FromType: comment.ToType,
 			IsTop:    utils.BoolToPoint(false),
 			Title:    "发布了一条评论",
 			Type:     "动态",

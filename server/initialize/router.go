@@ -3,6 +3,7 @@ package initialize
 import (
 	"net/http"
 
+	v1 "github.com/flipped-aurora/gin-vue-admin/server/api/v1"
 	_ "github.com/flipped-aurora/gin-vue-admin/server/docs"
 	"github.com/flipped-aurora/gin-vue-admin/server/global"
 	"github.com/flipped-aurora/gin-vue-admin/server/middleware"
@@ -50,6 +51,10 @@ func Routers() *gin.Engine {
 		})
 	}
 	{
+		// 格外开放的接口--start---
+		PublicGroup.POST("user/admin_register", v1.ApiGroupApp.SystemApiGroup.BaseApi.Register) // 管理员注册账号
+		// 格外开放的接口--end---
+
 		systemRouter.InitBaseRouter(PublicGroup) // 注册基础功能路由 不做鉴权
 		systemRouter.InitInitRouter(PublicGroup) // 自动初始化相关
 
