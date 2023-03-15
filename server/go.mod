@@ -3,6 +3,7 @@ module github.com/flipped-aurora/gin-vue-admin/server
 go 1.18
 
 require (
+	github.com/FloatTech/ttl v0.0.0-20230307105452-d6f7b2b647d1
 	github.com/aliyun/aliyun-oss-go-sdk v2.1.6+incompatible
 	github.com/aws/aws-sdk-go v1.42.27
 	github.com/casbin/casbin/v2 v2.51.0
@@ -27,7 +28,7 @@ require (
 	github.com/shirou/gopsutil/v3 v3.22.5
 	github.com/songzhibin97/gkit v1.2.7
 	github.com/spf13/viper v1.7.0
-	github.com/stretchr/testify v1.7.1
+	github.com/stretchr/testify v1.8.0
 	github.com/swaggo/gin-swagger v1.3.0
 	github.com/swaggo/swag v1.8.8
 	github.com/tencentyun/cos-go-sdk-v5 v0.7.19
@@ -119,7 +120,7 @@ require (
 	google.golang.org/protobuf v1.27.1 // indirect
 	gopkg.in/ini.v1 v1.55.0 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
-	gopkg.in/yaml.v3 v3.0.0 // indirect
+	gopkg.in/yaml.v3 v3.0.1 // indirect
 	gorm.io/plugin/dbresolver v1.1.0 // indirect
 	modernc.org/libc v1.15.1 // indirect
 	modernc.org/mathutil v1.4.1 // indirect

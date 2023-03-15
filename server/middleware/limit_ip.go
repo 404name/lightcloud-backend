@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"net/http"
+	"sync"
 	"time"
 
 	"go.uber.org/zap"
@@ -12,6 +13,9 @@ import (
 	"github.com/flipped-aurora/gin-vue-admin/server/model/common/response"
 	"github.com/gin-gonic/gin"
 )
+
+var once sync.Once
+var limiterManager *LimiterManager[string]
 
 type LimitConfig struct {
 	// GenerationKey 根据业务生成key 下面CheckOrMark查询生成
@@ -42,10 +46,19 @@ func DefaultGenerationKey(c *gin.Context) string {
 }
 
 func DefaultCheckOrMark(key string, expire int, limit int) (err error) {
-	// 判断是否开启redis
+	// 没开启redis走内存ttl漏桶限流器
 	if global.GVA_REDIS == nil {
-		return err
+		once.Do(func() {
+			// 限流器
+			limiterManager = NewManager[string](time.Duration(int64(expire)/int64(limit))*time.Second, limit)
+
+		})
+		if ok := limiterManager.Load(key).Acquire(); ok {
+			return nil
+		}
+		return errors.New("请求太过频繁，请稍后再试")
 	}
+	//开启redis
 	if err = SetLimitWithTime(key, limit, time.Duration(expire)*time.Second); err != nil {
 		global.GVA_LOG.Error("limit", zap.Error(err))
 	}
