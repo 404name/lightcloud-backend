@@ -93,7 +93,8 @@
           <el-input v-model.number="formData.categoryId" :clearable="true" placeholder="请输入" />
         </el-form-item>
         <el-form-item label="内容:"  prop="content" >
-          <el-input v-model="formData.content" :clearable="true"  placeholder="请输入" />
+          <Tinymce v-model:value="formData.content"/>
+          <!-- <el-input v-model="formData.content" :clearable="true"  placeholder="请输入" /> -->
         </el-form-item>
         <el-form-item label="封面:"  prop="cover" >
           <el-input v-model="formData.cover" :clearable="true"  placeholder="请输入" />
@@ -144,6 +145,7 @@ import {
 import { getDictFunc, formatDate, formatBoolean, filterDict } from '@/utils/format'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { ref, reactive } from 'vue'
+import Tinymce from '@/components/tinymce/index.vue'
 
 // 自动化生成的字典（可能为空）以及字段
 const formData = ref({

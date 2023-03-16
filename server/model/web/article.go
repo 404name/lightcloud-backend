@@ -9,7 +9,7 @@ import (
 type Article struct {
 	global.GVA_MODEL
 	CategoryId *int   `json:"categoryId" form:"categoryId" gorm:"column:category_id;comment:分类;size:10;"`
-	Content    string `json:"content" form:"content" gorm:"column:content;comment:内容;"`
+	Content    string `json:"content" form:"content" gorm:"type:text;column:content;comment:内容;"`
 	Cover      string `json:"cover" form:"cover" gorm:"column:cover;comment:封面;size:255;"`
 	IsTop      *bool  `json:"isTop" form:"isTop" gorm:"column:is_top;comment:是否置顶;"`
 	Status     *int   `json:"status" form:"status" gorm:"column:status;comment:状态;size:10;"`

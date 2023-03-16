@@ -203,8 +203,9 @@ func (userApi *WebUserApi) CreatComment(c *gin.Context) {
 		response.FailWithMessage("创建失败", c)
 	} else {
 		var cover string
+		var desc string
 		cover, _ = extra["cover"].(string)
-
+		desc, _ = extra["desc"].(string)
 		// 后面改成消息队列
 		momentsService.CreateMoments(web.Moments{
 			Content:  comment.Content,
@@ -212,7 +213,7 @@ func (userApi *WebUserApi) CreatComment(c *gin.Context) {
 			FromId:   comment.ToId,
 			FromType: comment.ToType,
 			IsTop:    utils.BoolToPoint(false),
-			Title:    "发布了一条评论",
+			Title:    desc,
 			Type:     "动态",
 			UserId:   &userid,
 			Extra:    utils.GetUserExtra(c),
@@ -233,17 +234,13 @@ func (userApi *WebUserApi) CreatComment(c *gin.Context) {
 func (userApi *WebUserApi) CreateArticle(c *gin.Context) {
 
 	var article web.Article
+	var extra string
+	var userId int
 	err := c.ShouldBindJSON(&article)
 	if err != nil {
 		response.FailWithMessage(err.Error(), c)
 		return
 	}
-
-	// 添加附加信息
-	userid := int(utils.GetUserID(c))
-	article.Uid = &userid
-	article.Extra = utils.GetUserExtra(c)
-
 	// 验证
 	verify := utils.Rules{
 		"CategoryId": {utils.NotEmpty()},
@@ -257,6 +254,31 @@ func (userApi *WebUserApi) CreateArticle(c *gin.Context) {
 		response.FailWithMessage(err.Error(), c)
 		return
 	}
+
+	// 如果填寫了userid就从token拿
+	// 添加附加信息
+	if article.Uid != nil {
+		if user, err := userService.FindUserById(*article.Uid); err == nil {
+			type H map[string]interface{}
+			res, _ := json.Marshal(H{
+				"userId":   user.ID,
+				"username": user.NickName,
+				"headImg":  user.HeaderImg,
+			})
+			userId = *article.Uid
+			extra = string(res)
+		} else {
+			userId = int(utils.GetUserID(c))
+			extra = utils.GetUserExtra(c)
+		}
+	} else {
+		userId = int(utils.GetUserID(c))
+		extra = utils.GetUserExtra(c)
+	}
+	// 添加附加信息
+	article.Uid = &userId
+	article.Extra = extra
+
 	if err := articleService.CreateArticle(&article); err != nil {
 		global.GVA_LOG.Error("创建失败!", zap.Error(err))
 		response.FailWithMessage("创建失败", c)
@@ -268,10 +290,10 @@ func (userApi *WebUserApi) CreateArticle(c *gin.Context) {
 			FromId:   utils.UintToInt(article.ID),
 			FromType: utils.IntToPoint(0),
 			IsTop:    utils.BoolToPoint(false),
-			Title:    "发布了一条评论",
+			Title:    "发布了一篇文章",
 			Type:     "动态",
-			UserId:   &userid,
-			Extra:    utils.GetUserExtra(c),
+			UserId:   &userId,
+			Extra:    extra,
 		})
 		response.OkWithMessage("创建成功", c)
 	}
@@ -289,16 +311,39 @@ func (userApi *WebUserApi) CreateArticle(c *gin.Context) {
 func (userApi *WebUserApi) CreateActivity(c *gin.Context) {
 
 	var activity web.Activity
+	var extra string
+	var userId int
+
 	err := c.ShouldBindJSON(&activity)
 	if err != nil {
 		response.FailWithMessage(err.Error(), c)
 		return
 	}
+	// 如果填寫了userid就从token拿
 	// 添加附加信息
-	userid := int(utils.GetUserID(c))
-	activity.UserId = &userid
-	activity.Extra = utils.GetUserExtra(c)
-	activity.CreatedBy = utils.GetUserID(c)
+	if activity.UserId != nil {
+		if user, err := userService.FindUserById(*activity.UserId); err == nil {
+			type H map[string]interface{}
+			res, _ := json.Marshal(H{
+				"userId":   user.ID,
+				"username": user.NickName,
+				"headImg":  user.HeaderImg,
+			})
+			userId = *activity.UserId
+			extra = string(res)
+		} else {
+			userId = int(utils.GetUserID(c))
+			extra = utils.GetUserExtra(c)
+		}
+	} else {
+		userId = int(utils.GetUserID(c))
+		extra = utils.GetUserExtra(c)
+	}
+
+	activity.UserId = &userId
+
+	activity.Extra = extra
+	activity.CreatedBy = uint(userId)
 	if err := activityService.CreateActivity(&activity); err != nil {
 		global.GVA_LOG.Error("创建失败!", zap.Error(err))
 		response.FailWithMessage("创建失败", c)
@@ -312,8 +357,8 @@ func (userApi *WebUserApi) CreateActivity(c *gin.Context) {
 			IsTop:    utils.BoolToPoint(false),
 			Title:    "发布了新的活动",
 			Type:     "动态",
-			UserId:   &userid,
-			Extra:    utils.GetUserExtra(c),
+			UserId:   &userId,
+			Extra:    extra,
 		})
 		response.OkWithMessage("创建成功", c)
 	}

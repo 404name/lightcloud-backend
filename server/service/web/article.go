@@ -74,6 +74,6 @@ func (articleService *ArticleService) GetArticleInfoList(info webReq.ArticleSear
 		return
 	}
 
-	err = db.Limit(limit).Offset(offset).Find(&articles).Error
+	err = db.Order("id desc").Limit(limit).Offset(offset).Find(&articles).Error
 	return articles, total, err
 }

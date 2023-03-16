@@ -77,7 +77,7 @@ func (activityRecordService *ActivityRecordService) GetActivityRecordInfoList(in
 		return
 	}
 
-	err = db.Limit(limit).Offset(offset).Find(&activityRecords).Error
+	err = db.Order("id desc").Limit(limit).Offset(offset).Find(&activityRecords).Error
 	return activityRecords, total, err
 }
 

@@ -42,3 +42,17 @@ export const editFileName = (data) => {
     data
   })
 }
+
+/**
+ * 上传文件
+ * @param data
+ * @returns {*}
+ */
+export const uploadFile = (data) => {
+  return service({
+    url: '/fileUploadAndDownload/upload',
+    method: 'post',
+    headers: { 'Content-Type': 'multipart/form-data; boundary=----WebKitFormBoundary6MuYyWuubhPwrBvS' },
+    data
+  })
+}

@@ -10,7 +10,7 @@ import (
 type Activity struct {
 	global.GVA_MODEL
 	BeginTime *utils.JSONTime `json:"beginTime" form:"beginTime" gorm:"column:begin_time;comment:活动开始时间;"`
-	Content   string          `json:"content" form:"content" gorm:"column:content;comment:内容;"`
+	Content   string          `json:"content" form:"content" gorm:"type:text;column:content;comment:内容;"`
 	Cover     string          `json:"cover" form:"cover" gorm:"column:cover;comment:封面;size:255;"`
 	EndTime   *utils.JSONTime `json:"endTime" form:"endTime" gorm:"column:end_time;comment:活动结束时间;"`
 	Status    string          `json:"status" form:"status" gorm:"column:status;comment:活动状态(json);size:255;"`

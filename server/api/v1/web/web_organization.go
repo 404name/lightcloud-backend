@@ -68,7 +68,7 @@ func (WebOrganizationApi *WebOrganizationApi) GetHomePage(c *gin.Context) {
 		return
 	}
 	// 获取社团动态
-	if resp.Moments, _, err = momentsService.GetMomentsInfoList(webReq.MomentsSearch{PageInfo: page, Moments: web.Moments{FromId: &id, FromType: utils.IntToPoint(global.MomentsTypeOrganization)}}); err != nil {
+	if resp.Moments, _, err = momentsService.GetMomentsInfoList(webReq.MomentsSearch{PageInfo: page, Moments: web.Moments{UserId: &id}}); err != nil {
 		global.GVA_LOG.Error("获取失败!", zap.Error(err))
 		response.FailWithMessage("获取失败", c)
 		return

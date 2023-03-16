@@ -26,7 +26,7 @@ func GetUserExtra(c *gin.Context) string {
 	} else {
 		if extra, err := json.Marshal(H{
 			"userId":   claims.ID,
-			"username": claims.Username,
+			"username": claims.NickName,
 			"headImg":  claims.HeaderImg,
 		}); err != nil {
 			return ""
